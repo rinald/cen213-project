@@ -1,0 +1,6 @@
+{
+    "python.pythonPath": "/home/rinald/.local/share/virtualenvs/shovel_knight-WjbbxbQM/bin/python",
+    "python.linting.mypyEnabled": false,
+    "python.linting.pylintEnabled": false,
+    "python.linting.enabled": false
+}
