@@ -30,8 +30,6 @@ class ShovelKnight(Game):
             spf=5
         )
         self.add_listener(self.player)
-        # pg_mixer.music.load('music.wav')
-        # pg_mixer.music.play(-1, 0.0)
 
     def draw(self):
         self.screen.blit(background, (0, 0))
