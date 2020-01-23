@@ -1,12 +1,7 @@
 from abc import ABC, abstractmethod
 import sys
 
-import pygame
-import pygame.display as pg_display
-import pygame.time as pg_time
-import pygame.event as pg_event
-
-from pygame.locals import *
+from . import *
 
 
 class Game(ABC):
@@ -15,7 +10,7 @@ class Game(ABC):
         self.window_size = window_size
         self.fps = fps
 
-        pygame.init()
+        pg.init()
         pg_display.set_caption(title)
 
         self.screen = pg_display.set_mode(window_size)
@@ -31,11 +26,11 @@ class Game(ABC):
         while True:
             for event in pg_event.get():
                 if event.type == QUIT:
-                    pygame.quit()
+                    pg.quit()
                     sys.exit()
 
                 for listener in self.event_listeners:
-                    listener.update(event)
+                    listener.on_event(event)
 
             self.draw()
             self.update()

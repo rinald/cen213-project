@@ -1,4 +1,4 @@
-import pygame.image as pg_image
+from . import pg_image
 
 
 class SpriteSheet:
