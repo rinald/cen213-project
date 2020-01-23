@@ -1,16 +1,13 @@
-import pygame as pg
-import pygame.image as pg_image
-import pygame.transform as pg_transform
-import pygame.mixer as pg_mixer
+from engine import *
 
-from game import Game
 from player import Player, frames
-from sprite_sheet import SpriteSheet
 
-RED = (255, 0, 0)
+FPS = 60
+WINDOW_SIZE = (640, 480)
+TITLE = 'Shovel Knight'
 
-sprite_sheet = SpriteSheet('plains.png', {
-    'background': (161, 35, 80, 60),
+sprite_sheet = SpriteSheet('assets/images/plains.png', {
+    'background': (0, 20, 160, 110),
     'ground': (175, 224, 16, 16)
 })
 
@@ -23,11 +20,10 @@ ground = pg_transform.scale(ground, (32, 32))
 class ShovelKnight(Game):
     def init(self):
         self.player = Player(
-            sprite_sheet='shovel_knight.png',
+            sprite_sheet='assets/images/shovel_knight.png',
             rect=frames['idle'],
             scale=(2, 2),
             pos=[300, 415-29],
-            spf=5
         )
         self.add_listener(self.player)
 
