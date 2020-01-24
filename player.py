@@ -16,7 +16,7 @@ scale = (2, 2)
 vx = 20
 
 dt = 0.2
-g = 60
+g = 100
 
 
 class Player:
@@ -25,10 +25,13 @@ class Player:
         self.animation = None
         self.grounded = True
         self.animations = {
-            'walk': Animation(frames['walk'], 0.8, repeat=True),
-            'dig': Animation(frames['dig'], 0.8),
+            'walk': Animation(frames['walk'], 0.6, repeat=True),
+            'dig': Animation(frames['dig'], 0.5),
             'shine': Animation(frames['shine'], 0.5),
         }
+        self.slash_sound = pg_mixer.Sound('assets/sounds/knight_slash.ogg')
+        self.jump_sound = pg_mixer.Sound('assets/sounds/knight_jump.ogg')
+        self.land_sound = pg_mixer.Sound('assets/sounds/knight_land.ogg')
         self.right = True
         self.vx, self.vy = 0, 0
         self.sprites = pg.image.load(sprite_sheet)
@@ -70,7 +73,8 @@ class Player:
                         rect=frames['downward_thrust'], scale=scale)
             elif event.key == K_UP:
                 if self.grounded:
-                    self.vy = -35
+                    self.vy = -50
+                    self.jump_sound.play()
 
                 self.animating = False
                 self.grounded = False
@@ -79,6 +83,7 @@ class Player:
             elif event.key == K_SPACE:
                 self.animating = True
                 self.animation = self.animations['dig']
+                self.slash_sound.play()
             elif event.key == K_f:
                 self.animating = True
                 self.animation = self.animations['shine']
@@ -109,13 +114,14 @@ class Player:
 
         self.pos[0] += self.vx*dt
 
-        if self.pos[0] > 640-64:
-            self.pos[0] = 640-64
+        if self.pos[0] > 800-64:
+            self.pos[0] = 800-64
 
         self.pos[1] += self.vy*dt
 
-        if self.pos[1] > 415-29:
-            self.pos[1] = 415-29
+        if self.pos[1] > 415-29-32:
+            self.land_sound.play()
+            self.pos[1] = 415-29-32
             self.vy = 0
             self.grounded = True
             self.set_sprite(frames['idle'], scale=scale)
