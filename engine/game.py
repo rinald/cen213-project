@@ -10,7 +10,10 @@ class Game(ABC):
         self.window_size = window_size
         self.fps = fps
 
+        pg_mixer.pre_init(44100, -16, 1, 512)
+        pg_mixer.init()
         pg.init()
+
         pg_display.set_caption(title)
 
         self.screen = pg_display.set_mode(window_size)
