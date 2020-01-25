@@ -14,6 +14,7 @@ class Game(ABC):
         pg_display.set_caption(title)
 
         self.screen = pg_display.set_mode(window_size)
+        self.surface = Surface(tuple((i/2 for i in window_size)))
         self.clock = pg_time.Clock()
         self.event_listeners = []
 
