@@ -7,12 +7,13 @@ _sprites = SpriteSheet('assets/images/beeto.png', {
 
 
 class Beeto:
-    def __init__(self, pos=None):
+    def __init__(self, rect=None, bounds=None):
         self.flip = False
         self.animation = Animation(
-            _sprites.animation_tiles('walk'), 1, repeat=True)
-        self.pos = pos
-        self.vx = 2
+            _sprites.animation_sprites('walk'), 1, repeat=True)
+        self.rect = rect
+        self.bounds = bounds
+        self.vx = 5
 
     def animate(self):
         self.animation.tick()
@@ -22,11 +23,15 @@ class Beeto:
         if self.flip:
             frame = pg_transform.flip(frame, 1, 0)
 
-        surface.blit(frame, (self.pos[0]-offset[0], self.pos[1]-offset[1]))
+        surface.blit(frame, (self.rect.x-offset[0], self.rect.y-offset[1]))
 
-    def move(self):
-        self.pos[0] += self.vx * dt
+    def move(self, tiles):
+        self.rect.x += self.vx * dt
 
-        if self.pos[0] > 25*16-26 or self.pos[0] < 0:
+        if self.rect.x > self.bounds[1] or self.rect.x < self.bounds[0]:
             self.vx *= -1
             self.flip = not self.flip
+
+    def update(self, tiles):
+        self.move(tiles)
+        self.animate()

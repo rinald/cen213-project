@@ -19,10 +19,11 @@ class Game(ABC):
         self.screen = pg_display.set_mode(window_size)
         self.surface = Surface(tuple((i/2 for i in window_size)))
         self.clock = pg_time.Clock()
+        self.entity_pool = []
         self.event_listeners = []
 
-    def add_listener(self, listener):
-        self.event_listeners.append(listener)
+    def add_listener(self, i):
+        self.event_listeners.append(i)
 
     def run(self):
         self.init()
@@ -33,8 +34,8 @@ class Game(ABC):
                     pg.quit()
                     sys.exit()
 
-                for listener in self.event_listeners:
-                    listener.on_event(event)
+                for i in self.event_listeners:
+                    self.entity_pool[i].on_event(event)
 
             self.draw()
             self.update()
