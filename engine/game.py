@@ -35,7 +35,7 @@ class Game(ABC):
                     sys.exit()
 
                 for i in self.event_listeners:
-                    self.entity_pool[i].on_event(event)
+                    self.level.entities[i].on_event(event)
 
             self.draw()
             self.update()
