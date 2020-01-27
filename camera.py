@@ -10,7 +10,10 @@ class Camera:
         self.pos[0] += self.vx*dt
 
         if player.rect.x > 200-16 and player.rect.x < 600-16:
-            self.vx = player.vx
+            if player.collision['left'] or player.collision['right']:
+                self.vx = 0
+            else:
+                self.vx = player.vx
 
         if self.pos[0] < 0:
             self.pos[0] = 0

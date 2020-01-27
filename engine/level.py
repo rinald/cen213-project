@@ -1,6 +1,9 @@
 from engine import pg, Surface, SpriteSheet, Rect
 import os
 
+from player import Knight
+from enemy import Beeto
+
 path = os.path.dirname(__file__)
 path = os.path.join(path, '../assets/images/plains.png')
 
@@ -28,21 +31,46 @@ sprite_mapping = {
 }
 
 
+class Tile:
+    def __init__(self, rect, type):
+        self.rect = rect
+        self.type = type
+
+
 class Level:
     def __init__(self, data):
-        self.map = Surface((50*16, 15*16), pg.SRCALPHA)
         self.tiles = []
+        self.entities = []
 
         with open(data) as file:
             self.array = file.read().split('\n')
+            self.w = len(self.array[0])
+            self.h = len(self.array)
+        self.map = Surface((self.w*16, self.h*16), pg.SRCALPHA)
 
         self.build_map()
 
     def build_map(self):
-        for i in range(15):
-            for j in range(50):
+        for i in range(self.h):
+            for j in range(self.w):
                 k = self.array[i][j]
 
                 if k != ' ':
-                    self.map.blit(sprite_mapping[k], (j*16, i*16))
-                    self.tiles.append(Rect(j*16, i*16, 16, 16))
+                    if k not in ('P', 'B'):
+                        self.map.blit(sprite_mapping[k], (j*16, i*16))
+
+                        if k == 'H':
+                            _type = 'ladder'
+                        elif k == 'M':
+                            _type = 'spike'
+                        else:
+                            _type = 'block'
+
+                        self.tiles.append(
+                            Tile(Rect(j*16, i*16, 16, 16), _type))
+                    elif k == 'P':
+                        self.entities.append(
+                            Knight(Rect(j*16, i*16-15, 34, 31)))
+                    elif k == 'B':
+                        self.entities.append(
+                            Beeto(Rect(j*16, i*16+1, 26, 15)))
