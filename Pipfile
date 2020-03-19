@@ -7,8 +7,6 @@ verify_ssl = true
 autopep8 = "*"
 pylint = "*"
 
-[packages]
-pygame = "*"
 
 [requires]
-python_version = "3.7"
+python_version = "3.8"

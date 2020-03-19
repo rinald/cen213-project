@@ -18,7 +18,7 @@ class ShovelKnight(Game):
 
         self.camera = Camera()
 
-        pg_mixer.music.set_volume(0.5)
+        pg_mixer.music.set_volume(0.0)
         pg_mixer.music.load('assets/sounds/music.ogg')
         pg_mixer.music.play(loops=-1)
 
